@@ -1,0 +1,47 @@
+<!-- Add to the footer section of your Webflow site -->
+<script>
+// Contact Form functionality
+function setupContactForm() {
+  const openButtons = document.querySelectorAll('[data-contact="open"]');
+  const closeButtons = document.querySelectorAll('[data-contact="close"]');
+  const modal = document.querySelector('.modal-overlay');
+  const form = document.querySelector('#contactForm');
+
+  openButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  closeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    
+    // Here you would typically send the data to your backend
+    console.log('Form submitted:', data);
+    
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    form.reset();
+  });
+}
+
+// Initialize when the DOM is ready
+document.addEventListener('DOMContentLoaded', setupContactForm);
+</script>
